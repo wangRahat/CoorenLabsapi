@@ -1,39 +1,41 @@
-# CoorenLabs — Fly.io config
-# Deploy: fly launch (first time) or fly deploy (updates)
+# fly.toml app configuration file generated for coorenlabsapi on 2026-10-12T03:10:57Z
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
 
-app = "coorenlab"
-primary_region = "sin"   # Singapore — closest to India for low latency
+app = 'coorenlabsapi'
+primary_region = 'sin'
 
 [build]
-  dockerfile = "Dockerfile"
+  dockerfile = 'Dockerfile'
 
 [env]
-  PORT         = "3000"
-  NODE_ENV     = "production"
-  CORS_ORIGIN  = "*"
+  CORS_ORIGIN = '*'
+  NODE_ENV = 'production'
+  PORT = '3000'
 
 [http_service]
-  internal_port       = 3000
-  force_https         = true
-  auto_stop_machines  = "stop"    # stops when idle — saves free quota
-  auto_start_machines = true      # auto-starts on request
-  min_machines_running = 0        # 0 = full serverless mode on free plan
+  internal_port = 3000
+  force_https = true
+  auto_stop_machines = 'stop'
+  auto_start_machines = true
+  min_machines_running = 0
 
   [http_service.concurrency]
-    type       = "connections"
+    type = 'connections'
     hard_limit = 25
     soft_limit = 20
 
-[[vm]]
-  size   = "shared-cpu-1x"   # free tier machine
-  memory = "512mb"            # enough for Chromium + Bun
-
 [checks]
   [checks.health]
-    grace_period = "10s"
-    interval     = "30s"
-    method       = "GET"
-    path         = "/"
-    port         = 3000
-    timeout      = "5s"
-    type         = "http"
+    port = 3000
+    type = 'http'
+    interval = '30s'
+    timeout = '5s'
+    grace_period = '10s'
+    method = 'GET'
+    path = '/'
+
+[[vm]]
+  size = 'shared-cpu-1x'
+  memory = '512mb'
